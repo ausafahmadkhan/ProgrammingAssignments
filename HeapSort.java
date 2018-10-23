@@ -1,4 +1,4 @@
-import java .io.*;
+import java.io.*;
 class HeapSort
 {   private static int N;
     public void sink(Comparable[] ar,int k)
