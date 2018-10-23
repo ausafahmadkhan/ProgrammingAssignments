@@ -1,7 +1,6 @@
 class Percolation
 {
 	int ar[][];
-	//boolean marked[];
 	int aux[];
 	public Percolation(int n)
 	{
@@ -13,11 +12,6 @@ class Percolation
 				ar[i][j] = 0;
 			}
 		}
-		/*marked = new boolean[n*n];
-		for(int i = 0; i < marked.length; i++)
-		{
-			marked[i] = false;
-		}*/
 		aux = new int[n*n];
 		for(int i = 0; i < aux.length; i++)
 		{
@@ -52,14 +46,6 @@ class Percolation
 		int r2 = root(b);
 		aux[r1] = r2; 
 	}
-	/*private void createTree(int row, int col)
-	{
-		if(row < 0 || row >= ar.length || col < 0 || col >= ar.length)	return;
-		if(isOpen(row,col-1) && isOpen(row,col))	union(row * ar.length + col, row * ar.length +col -1);
-		if(isOpen(row-1,col) && isOpen(row,col))	union(row * ar.length + col, (row-1) * ar.length +col);
-		createTree(row,col-1);
-		createTree(row-1,col);
-	}*/
 	public boolean isFull(int row, int col)
 	{
 		if(row< 0 || row >= ar.length || col < 0 || col >= ar.length)	return false;
@@ -67,26 +53,6 @@ class Percolation
 		while(root(t) != t)		t = root(t);
 		return (t / ar.length == 0);
 	}
-	/*public boolean connected(int a, int b)
-	{
-		if(marked[a * ar.length + b])	return false;
-		if(a < 0 || a >= ar.length || b < 0 || b >= ar.length) return false;
-		if(!isOpen(a,b))	return false;
-		if(a == 0) return true;
-		else
-		{
-			marked[a * ar.length + b] = true;
-			if(isOpen(a,b-1))
-				if(connected(a,b-1))	return true;
-			if(isOpen(a,b+1))	 
-				if(connected(a,b+1))	return true;
-			if(isOpen(a-1,b))	 
-				if(connected(a-1,b))	return true;
-			if(isOpen(a+1,b))	 
-				if(connected(a+1,b))	return true;
-		}
-		return false;
-	}*/
 	public static void main(String args[])
 	{
 		Percolation p = new Percolation(5);
