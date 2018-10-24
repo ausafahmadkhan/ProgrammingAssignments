@@ -56,7 +56,7 @@ class Percolation
 	public static void main(String args[])
 	{
 		Percolation p = new Percolation(5);
-		p.open(0, 4);
+		p.open(4, 4);
 		p.open(1, 4);
 		p.open(2, 4);
 		p.open(2, 3);
@@ -64,7 +64,7 @@ class Percolation
 		p.open(3, 2);
 		p.open(4, 3);
 		p.open(4, 1);
-		p.open(4, 4);
+		p.open(0, 4);
 		for(int i = 0; i < p.ar.length; i++)
 		{
 			for(int j = 0; j < p.ar.length; j++)
