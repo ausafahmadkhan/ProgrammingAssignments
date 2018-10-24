@@ -44,10 +44,11 @@ class Percolation
 	{
 		int r1 = root(a);
 		int r2 = root(b);
-		aux[r1] = r2; 
+		if(a / ar.length == 0)	aux[r2] = r1;
+		else	aux[r1] = r2; 
 	}
 	public boolean isFull(int row, int col)
-	{
+i	{
 		if(row< 0 || row >= ar.length || col < 0 || col >= ar.length)	return false;
 		int t = row * ar.length + col;
 		while(root(t) != t)		t = root(t);
