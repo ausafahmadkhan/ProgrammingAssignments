@@ -13,8 +13,8 @@ class Perc
 				ar[i][j] = 0;
 			}
 		}
-		aux = new int[n*n];
-		size = new int[n*n];
+		aux = new int[n*n +2];
+		size = new int[n*n +2 ];
 		for(int i = 0; i < aux.length; i++)
 		{
 			aux[i] = i;
@@ -28,6 +28,8 @@ class Perc
 		if(isOpen(row-1,col))	union(row * ar.length + col, (row-1) * ar.length +col);
 		if(isOpen(row,col+1))	union(row * ar.length + col, row * ar.length +col +1);
 		if(isOpen(row+1,col))	union(row * ar.length + col, (row+1) * ar.length +col);
+		if(row == 0)	union(row * ar.length + col, aux.length -2);
+		if(row == ar.length -1)		union(row * ar.length + col, aux.length -1);
 
 	}
 	public boolean isOpen(int row, int col)
@@ -66,21 +68,23 @@ class Perc
 	public boolean isFull(int row, int col)
 	{
 		if(row< 0 || row >= ar.length || col < 0 || col >= ar.length)	return false;
-		for(int i = 0; i < ar[0].length; i++)
+		/*for(int i = 0; i < ar[0].length; i++)
 		{
 			if(isOpen(0,i) && isOpen(row, col))
 			{
 				if(connected(i, row * ar.length + col))		return true;
 			}
-		}
+		}*/
+		if(connected(row * ar.length + col,aux.length - 2))	return true;
 		return false;
 	}
 	public boolean percolates()
 	{
-		for(int i = 0; i < ar[0].length; i++)
+		/*for(int i = 0; i < ar[0].length; i++)
 		{
 			if(isFull(ar.length -1, i))	return true;
-		}
+		}*/
+		if(connected(aux.length - 2,aux.length - 1))	return true;
 		return false;
 	}
 	public static void main(String args[])
@@ -96,7 +100,7 @@ class Perc
 		//p.open(4, 1);
 		//p.open(4, 4);
 		p.open(2, 3);
-		//p.open(4, 0);
+		p.open(4, 0);
 		p.open(3, 0);
 		p.open(2, 0);
 		p.open(1, 0);
@@ -115,7 +119,7 @@ class Perc
 		{
 			System.out.println(p.aux[j]);
 		}
-		System.out.println(p.isFull(3, 2));
+		System.out.println(p.isFull(3, 1));
 		System.out.println(p.percolates());
 	}
 }
