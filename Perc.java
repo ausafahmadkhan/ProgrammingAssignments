@@ -79,13 +79,7 @@ class Perc
 	{
 		for(int i = 0; i < ar[0].length; i++)
 		{
-			for(int j = 0; j < ar[0].length; j++)
-			{
-				if(isOpen(ar.length -1,i) && isOpen(0, j))
-				{
-					if(connected(j, ar.length * ar.length - ar.length + i))		return true;
-				}
-			}
+			if(isFull(ar.length -1, i))	return true;
 		}
 		return false;
 	}
