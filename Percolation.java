@@ -1,4 +1,4 @@
-class Percolation
+public class Percolation
 {
 	private int ar[][];
 	private int parent[];
@@ -6,16 +6,17 @@ class Percolation
 	private int count = 0;
 	public Percolation(int n)
 	{
-		ar = new int[n][n];
-		for (int i = 0; i < n; i++)
+		if(n <= 0)	throw new IllegalArgumentException("Invalid size");
+		ar = new int[n+1][n+1];
+		for (int i = 0; i < ar.length; i++)
 		{
-			for (int j = 0; j < n; j++)
+			for (int j = 0; j < ar.length; j++)
 			{
 				ar[i][j] = 0;
 			}
 		}
-		parent = new int[n*n +2];
-		size = new int[n*n +2 ];
+		parent = new int[ar.length * ar.length];
+		size = new int[ar.length * ar.length];
 		for (int i = 0; i < parent.length; i++)
 		{
 			parent[i] = i;
@@ -24,26 +25,29 @@ class Percolation
 	}
 	public void open(int row, int col)
 	{
-		if (row < 0 || row >= ar.length || col < 0 || col >= ar.length)	
-			throw new IllegalArgumentException("Invalid index");
-		ar[row][col] = 1;
-		if (col-1 >= 0 && col-1 < ar.length && isOpen(row,col-1))	
-			union(row * ar.length + col, row * ar.length +col -1);
-		if (row-1 >= 0 && row-1 < ar.length && isOpen(row-1,col))	
-			union(row * ar.length + col, (row-1) * ar.length +col);
-		if (col+1 >= 0 && col+1 < ar.length && isOpen(row,col+1))	
-			union(row * ar.length + col, row * ar.length +col +1);
-		if (row+1 >= 0 && row+1 < ar.length && isOpen(row+1,col))	
-			union(row * ar.length + col, (row+1) * ar.length +col);
-		if (row == 0)	
-			union(row * ar.length + col, parent.length -2);
-		if (row == ar.length -1)	
-			union(row * ar.length + col, parent.length -1);
-		count++;
+		if(!isOpen(row, col))
+		{	
+			if (row <= 0 || row >= ar.length || col <= 0 || col >= ar.length)	
+				throw new IllegalArgumentException("Invalid index");
+			ar[row][col] = 1;
+			if (col-1 > 0 && col-1 < ar.length && isOpen(row,col-1))	
+				union(row * ar.length + col, row * ar.length +col -1);
+			if (row-1 > 0 && row-1 < ar.length && isOpen(row-1,col))	
+				union(row * ar.length + col, (row-1) * ar.length +col);
+			if (col+1 > 0 && col+1 < ar.length && isOpen(row,col+1))	
+				union(row * ar.length + col, row * ar.length +col +1);
+			if (row+1 > 0 && row+1 < ar.length && isOpen(row+1,col))	
+				union(row * ar.length + col, (row+1) * ar.length +col);
+			if (row == 1)	
+				union(row * ar.length + col, 0);
+			if (row == ar.length -1)	
+				union(row * ar.length + col, 1);
+			count++;
+		}
 	}
 	public boolean isOpen(int row, int col)
 	{
-		if (row < 0 || row >= ar.length || col < 0 || col >= ar.length)
+		if (row <= 0 || row >= ar.length || col <= 0 || col >= ar.length)
 			throw new IllegalArgumentException("Invalid index");
 		return ar[row][col] == 1;
 	}
@@ -77,14 +81,14 @@ class Percolation
 	}
 	public boolean isFull(int row, int col)
 	{
-		if (row < 0 || row >= ar.length || col < 0 || col >= ar.length)	
+		if (row <= 0 || row >= ar.length || col <= 0 || col >= ar.length)	
 			throw new IllegalArgumentException("Invalid index");
-		if (connected(row * ar.length + col,parent.length - 2))	return true;
+		if (connected(row * ar.length + col, 0))	return true;
 		return false;
 	}
 	public boolean percolates()
 	{
-		return (connected(parent.length - 2,parent.length - 1));
+		return (connected(0, 1));
 	}
 	public int numberOfOpenSites()
 	{
@@ -95,16 +99,17 @@ class Percolation
 		Percolation p = new Percolation(5);
 		p.open(3, 3);
 		p.open(3, 2);
-		p.open(0, 4);
-		p.open(1, 4);
 		p.open(2, 4);
 		p.open(2, 3);
-		p.open(4, 0);
-		p.open(3, 0);
-		p.open(2, 0);
-		p.open(1, 0);
-		p.open(0, 0);
-		p.open(4, 4);
+		p.open(4, 1);
+		p.open(1, 1);
+		p.open(2, 1);
+		p.open(3, 1);
+		p.open(5, 1);
+		p.open(4, 3);
+		p.open(5, 3);
+		p.open(1, 4);
+		
 		for (int i = 0; i < p.ar.length; i++)
 		{
 			for (int j = 0; j < p.ar.length; j++)
